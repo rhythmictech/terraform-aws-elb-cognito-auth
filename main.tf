@@ -6,9 +6,9 @@ locals {
 
   # Set values for Cognito user pool
   callback_urls       = formatlist("%soauth2/idpresponse", var.callback_urls)
-  user_pool_arn       = var.create_cognito_pool ? aws_cognito_user_pool.this[0].arn : var.user_pool_arn
-  user_pool_client_id = var.create_cognito_pool ? aws_cognito_user_pool_client.this[0].id : var.user_pool_client_id
-  user_pool_domain    = var.create_cognito_pool ? aws_cognito_user_pool_domain.this[0].domain : var.user_pool_domain
+  user_pool_arn       = var.create_cognito_pool ? try(aws_cognito_user_pool.this[0].arn, var.user_pool_arn) : var.user_pool_arn
+  user_pool_client_id = var.create_cognito_pool ? try(aws_cognito_user_pool_client.this[0].id, var.user_pool_client_id) : var.user_pool_client_id
+  user_pool_domain    = var.create_cognito_pool ? try(aws_cognito_user_pool_domain.this[0].domain, var.user_pool_domain) : var.user_pool_domain
 }
 
 resource "aws_lb_listener_rule" "this" {
