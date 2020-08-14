@@ -1,6 +1,6 @@
 output "lb_listener_rule_arn" {
   description = "AWS LB Listener Rule ARN"
-  value       = coalesce(aws_lb_listener_rule.this[0].arn, "")
+  value       = try(aws_lb_listener_rule.this[0].arn, "")
 }
 
 output "user_pool_arn" {
